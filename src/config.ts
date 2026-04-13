@@ -3,7 +3,7 @@ import type { ApiConfig } from "./shared";
 export const API_CONFIG: ApiConfig = {
   name: "ip-geolocation",
   slug: "ip-geolocation",
-  description: "IP geolocation with country, city, ISP, ASN, and VPN/proxy detection.",
+  description: "Geolocate any IP address -- country, city, ISP, ASN, VPN/proxy/Tor detection. IPv4 and IPv6 support.",
   version: "1.0.0",
   routes: [
     {
@@ -12,7 +12,15 @@ export const API_CONFIG: ApiConfig = {
       price: "$0.003",
       description: "Geolocate a single IP address",
       toolName: "ip_lookup_geolocation",
-      toolDescription: "Use this when you need to geolocate an IP address. Returns: country, region, city, latitude, longitude, timezone, ISP, organization, ASN, connection type, VPN/proxy/tor detection flag. Supports IPv4 and IPv6. Do NOT use for domain data — use domain_lookup_intelligence.",
+      toolDescription: `Use this when you need to geolocate an IP address. Returns full location and network data in JSON.
+
+Returns: 1. country and countryCode 2. region and city 3. latitude and longitude 4. timezone 5. ISP and organization 6. ASN 7. connectionType 8. isVPN, isProxy, isTor flags.
+
+Example output: {"ip":"8.8.8.8","country":"United States","countryCode":"US","region":"California","city":"Mountain View","latitude":37.386,"longitude":-122.084,"timezone":"America/Los_Angeles","isp":"Google LLC","asn":"AS15169","isVPN":false,"isProxy":false,"isTor":false}
+
+Use this FOR fraud detection, content localization, access control by region, analytics enrichment, and bot detection.
+
+Do NOT use for domain data -- use domain_lookup_intelligence instead. Do NOT use for DNS records -- use network_lookup_dns instead.`,
       inputSchema: {
         type: "object",
         properties: {
@@ -27,7 +35,15 @@ export const API_CONFIG: ApiConfig = {
       price: "$0.01",
       description: "Geolocate up to 20 IP addresses in one call",
       toolName: "ip_lookup_geolocation_batch",
-      toolDescription: "Use this when you need to geolocate multiple IP addresses at once. Accepts up to 20 IPs. Returns array of geolocation results: country, region, city, lat/lon, timezone, ISP, ASN, VPN/proxy detection for each IP. More cost-effective than single lookups for bulk operations. Do NOT use for single IPs — use ip_lookup_geolocation. Do NOT use for domain data — use domain_lookup_intelligence.",
+      toolDescription: `Use this when you need to geolocate multiple IP addresses at once (up to 20). Returns an array of geolocation results in JSON.
+
+Returns per IP: 1. country, region, city 2. latitude, longitude 3. timezone 4. ISP, ASN 5. isVPN, isProxy, isTor flags.
+
+Example output: {"results":[{"ip":"8.8.8.8","country":"United States","city":"Mountain View","isp":"Google LLC","isVPN":false},{"ip":"1.1.1.1","country":"Australia","city":"Sydney","isp":"Cloudflare","isVPN":false}],"total":2}
+
+Use this FOR bulk log analysis, batch fraud screening, and enriching analytics data with location info. More cost-effective than single lookups.
+
+Do NOT use for single IPs -- use ip_lookup_geolocation instead. Do NOT use for domain data -- use domain_lookup_intelligence instead.`,
       inputSchema: {
         type: "object",
         properties: {
