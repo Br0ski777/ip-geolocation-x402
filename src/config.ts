@@ -28,6 +28,53 @@ Do NOT use for domain data -- use domain_lookup_intelligence instead. Do NOT use
         },
         required: ["ip"],
       },
+      outputSchema: {
+          "type": "object",
+          "properties": {
+            "ip": {
+              "type": "string",
+              "description": "IP address looked up"
+            },
+            "country": {
+              "type": "string"
+            },
+            "countryCode": {
+              "type": "string"
+            },
+            "region": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "latitude": {
+              "type": "number"
+            },
+            "longitude": {
+              "type": "number"
+            },
+            "timezone": {
+              "type": "string"
+            },
+            "isp": {
+              "type": "string"
+            },
+            "org": {
+              "type": "string"
+            },
+            "asn": {
+              "type": "string"
+            },
+            "lookup_time_ms": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "ip",
+            "country",
+            "city"
+          ]
+        },
     },
     {
       method: "POST",
@@ -55,6 +102,28 @@ Do NOT use for single IPs -- use ip_lookup_geolocation instead. Do NOT use for d
         },
         required: ["ips"],
       },
+      outputSchema: {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number",
+              "description": "Number of IPs looked up"
+            },
+            "results": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "lookup_time_ms": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "count",
+            "results"
+          ]
+        },
     },
   ],
 };
