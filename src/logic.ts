@@ -1,5 +1,20 @@
 import type { Hono } from "hono";
 
+
+// ATXP: requirePayment only fires inside an ATXP context (set by atxpHono middleware).
+// For raw x402 requests, the existing @x402/hono middleware handles the gate.
+// If neither protocol is active (ATXP_CONNECTION unset), tryRequirePayment is a no-op.
+async function tryRequirePayment(price: number): Promise<void> {
+  if (!process.env.ATXP_CONNECTION) return;
+  try {
+    const { requirePayment } = await import("@atxp/server");
+    const BigNumber = (await import("bignumber.js")).default;
+    await requirePayment({ price: BigNumber(price) });
+  } catch (e: any) {
+    if (e?.code === -30402) throw e;
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Known VPN / hosting / proxy providers for heuristic detection
 // ---------------------------------------------------------------------------
@@ -130,6 +145,7 @@ async function lookupIp(ip: string): Promise<GeoResult> {
 export function registerRoutes(app: Hono) {
   // Single IP lookup
   app.get("/api/lookup", async (c) => {
+    await tryRequirePayment(0.003);
     const ip = c.req.query("ip");
     if (!ip) return c.json({ error: "Missing required parameter: ip" }, 400);
     if (!isValidIp(ip)) return c.json({ error: "Invalid IP address format" }, 400);
@@ -146,6 +162,7 @@ export function registerRoutes(app: Hono) {
 
   // Batch IP lookup (up to 20)
   app.post("/api/lookup/batch", async (c) => {
+    await tryRequirePayment(0.01);
     let body: { ips?: string[] };
     try {
       body = await c.req.json();
