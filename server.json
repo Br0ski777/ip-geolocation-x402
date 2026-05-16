@@ -12,7 +12,7 @@
   "remotes": [
     {
       "type": "sse",
-      "url": "https://ip-geolocation-x402-production.up.railway.app/mcp"
+      "url": "https://ip-geolocation.api.klymax402.com/mcp"
     }
   ]
 }
