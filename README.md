@@ -35,8 +35,8 @@ Any x402-aware client ([`@x402/fetch`](https://www.npmjs.com/package/@x402/fetch
 
 | Tool | Method | Path | Price | Description |
 |---|---|---|---|---|
-| `ip_lookup_geolocation` | GET | `/api/lookup` | $0.003 | Geolocate a single IP address |
-| `ip_lookup_geolocation_batch` | POST | `/api/lookup/batch` | $0.01 | Geolocate up to 20 IP addresses in one call |
+| `ip_lookup_geolocation` | GET | `/api/lookup` | $0.008 | Geolocate a single IP address |
+| `ip_lookup_geolocation_batch` | POST | `/api/lookup/batch` | $0.02 | Geolocate up to 20 IP addresses in one call |
 
 ### `ip_lookup_geolocation`
 
