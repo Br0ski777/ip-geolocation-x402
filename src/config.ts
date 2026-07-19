@@ -9,7 +9,7 @@ export const API_CONFIG: ApiConfig = {
     {
       method: "GET",
       path: "/api/lookup",
-      price: "$0.003",
+      price: "$0.008",
       description: "Geolocate a single IP address",
       toolName: "ip_lookup_geolocation",
       toolDescription: `Use this when you need to geolocate an IP address. Returns full location and network data in JSON.
@@ -79,7 +79,7 @@ Do NOT use for domain data -- use domain_lookup_intelligence instead. Do NOT use
     {
       method: "POST",
       path: "/api/lookup/batch",
-      price: "$0.01",
+      price: "$0.02",
       description: "Geolocate up to 20 IP addresses in one call",
       toolName: "ip_lookup_geolocation_batch",
       toolDescription: `Use this when you need to geolocate multiple IP addresses at once (up to 20). Returns an array of geolocation results in JSON.
